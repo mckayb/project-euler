@@ -12,14 +12,14 @@ const divisibleThroughFirstN = (n) => {
   }
 }
 
-const divisibleThroughFirst20 = divisibleThroughFirstN(20);
-let num = 2520;
+const divisibleThroughFirst20 = divisibleThroughFirstN(20)
+let num = 2520
 while (true) {
   if (divisibleThroughFirst20(num)) {
-    console.log('Num: ', num);
-    break;
+    console.log('Num: ', num)
+    break
   }
-  num += 2;
+  num += 2
 }
 
 // const divisibleThroughFirst10 = divisibleThroughFirstN(10);
