@@ -12,7 +12,7 @@
 // hundred natural numbers and the square of the sum.
 
 const sumOfFirstN = (n) => {
-  return (n * (n + 1)) / 2;
+  return (n * (n + 1)) / 2
 }
 
 const sumOfSquaresOfFirstN = (n) => {
