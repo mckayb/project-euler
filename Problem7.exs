@@ -3,8 +3,7 @@
 # What is the 10001st prime number?
 defmodule Factors do
   def find(n) do
-    floorSqrtN = round(Float.floor(:math.sqrt(n)))
-    Enum.filter(1..floorSqrtN, fn(x) -> rem(n, x) === 0 end)
+    Enum.filter(1..div(n, 2), fn(x) -> rem(n, x) === 0 end)
   end
 end
 
@@ -18,14 +17,22 @@ defmodule Prime do
   end
 
   def next_prime(n) do
-    n = n + 1
-    if check(n) do
-      n
-    else
-      next_prime(n)
+    cond do
+      n >= 3 ->
+        # This speeds up everything, but makes us require the n === 2 case
+        n = n + 2
+        if check(n) do
+          n
+        else
+          next_prime(n)
+        end
+      # For when they're looking for the first prime.
+      n < 2 -> 2
+      # The jump from 2 to 3
+      n === 2 -> 3
     end
   end
 end
 
-# IO.puts Prime.nth(6)
+IO.puts Prime.nth(6)
 IO.puts Prime.nth(10001)
