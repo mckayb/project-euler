@@ -3,13 +3,13 @@
 # What is the 10001st prime number?
 defmodule Factors do
   def find(n) do
-    Enum.filter(1..div(n, 2), fn(x) -> rem(n, x) === 0 end)
+    Enum.filter(1..div(n, 2), fn(x) -> rem(n, x) === 0 end) ++ [n]
   end
 end
 
 defmodule Prime do
   def check(n) do
-    Factors.find(n) === [1]
+    Factors.find(n) === [1, n]
   end
 
   def nth(n) do
