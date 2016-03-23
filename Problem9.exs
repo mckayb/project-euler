@@ -8,38 +8,22 @@
 # triplet for which a + b + c = 1000.
 # Find the product abc.
 
-# a^2 + b^2 = c^2
-# a + b + c = 1000
-
-# c = 1000 - (a + b)
-# a^2 + b^2 = (1000 - (a + b))^2
-# a^2 + b^2 = 1000000 - 2000(a + b) + a^2 + 2ab + b^2
-# 0 = 1000000 - 2000a + 2000b + 2ab
-# 1000000 = 2000(a - b) + 2ab
-# 1000000 = 2(1000(a - b) + ab)
-# 500000 = 1000(a - b) + ab
-
 # There's a way to generate them. But I'll have to research it
 # and come up with the elegant solution. Until then, Brute force it is.
 
 defmodule Pythagorean do
   def triplesOfSum(sum) do
-    Enum.each(1..sum, fn(a) ->
-      Enum.each(1..sum, fn(b) ->
-        productOfTriple = Enum.filter_map(1..sum, fn(c) ->
-          a + b + c === sum and (a*a + b*b) === c*c
-        end,
-        fn(x) ->
-          a * b * x
-        end)
-
-        if (productOfTriple !== []) do
-          IO.inspect productOfTriple
+    {floatSum, _} = Float.parse(Integer.to_string(sum))
+    Enum.any?(1..sum, fn(a) ->
+      Enum.any?(1..sum, fn(b) ->
+        cSquared = a*a + b*b
+        c = :math.sqrt(cSquared)
+        if (a + b + c === floatSum) do
+          IO.puts a * b * c
         end
       end)
     end)
   end
 end
-
 Pythagorean.triplesOfSum(1000)
 # Pythagorean.triplesOfSum(12)
