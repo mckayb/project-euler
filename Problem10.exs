@@ -2,7 +2,9 @@
 # Find the sum of all the primes below two million.
 
 defmodule Factors do
-  # This could be a one liner, however, it's quite slow in that form.
+  # The entirety of both find methods could be one line,
+  # but it's quite slow in that form. So I had to make
+  # it a little more complex.
   def find(n) do
     find(n, 2, [1, n], div(n, 2))
   end
