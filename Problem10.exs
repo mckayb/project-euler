@@ -2,10 +2,14 @@
 # Find the sum of all the primes below two million.
 
 defmodule Factors do
+  # This could be a one liner, however, it's quite slow in that form.
   def find(n) do
     find(n, 2, [1, n], div(n, 2))
   end
 
+  # Use the symmetry of all of the factors to put both m, and n/m
+  # as factors at the same time. This way, I only really need
+  # to loop through about n/4 to find all of the factors.
   def find(n, factorGuess, factorList, stop) do
     quotient = div(n, factorGuess)
 
@@ -29,20 +33,12 @@ defmodule Factors do
   end
 end
 
-# defmodule Sieve do
-  # def findPrimes(threshold) do
-    # Enum
-    # end
-    # end
-
 defmodule Prime do
+  # We only need to go up to sqrt(n) to determine if
+  # a number is prime or not.
   def check(n) do
     sqrtN = round(:math.sqrt(n))
     Factors.find(n, 2, [1], sqrtN) === [1]
-  end
-
-  def nth(n) do
-    Enum.reduce(1..n, 1, fn(_x, acc) -> next_prime(acc) end)
   end
 
   def next_prime(n) do
@@ -62,7 +58,6 @@ defmodule Prime do
     end
   end
 
-  # This takes far too long right now...
   def sum_primes(threshold, current, sum) do
     prime = next_prime(current)
     if (prime < threshold) do
