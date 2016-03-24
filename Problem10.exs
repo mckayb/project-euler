@@ -3,13 +3,42 @@
 
 defmodule Factors do
   def find(n) do
-    Enum.filter(1..div(n, 2), fn(x) -> rem(n, x) === 0 end) ++ [n]
+    find(n, 2, [1, n], div(n, 2))
+  end
+
+  def find(n, factorGuess, factorList, stop) do
+    quotient = div(n, factorGuess)
+
+    if (rem(n, factorGuess) === 0) do
+      if (factorGuess !== quotient) do
+        factorList = factorList ++ [ factorGuess, quotient ]
+      else
+        factorList = factorList ++ [ factorGuess ]
+      end
+
+      if (quotient < stop) do
+        stop = factorGuess
+      end
+    end
+
+    if (factorGuess < stop) do
+      find(n, factorGuess + 1, factorList, stop)
+    else
+      factorList
+    end
   end
 end
 
+# defmodule Sieve do
+  # def findPrimes(threshold) do
+    # Enum
+    # end
+    # end
+
 defmodule Prime do
   def check(n) do
-    Factors.find(n) === [1, n]
+    sqrtN = round(:math.sqrt(n))
+    Factors.find(n, 2, [1], sqrtN) === [1]
   end
 
   def nth(n) do
@@ -44,5 +73,6 @@ defmodule Prime do
   end
 end
 
-sumOfPrimes = Prime.sum_primes(2000000, 0, 0)
+sumOfPrimes = Prime.sum_primes(2000000, 1, 0)
+# sumOfPrimes = Prime.sum_primes(10, 1, 0)
 IO.puts sumOfPrimes
