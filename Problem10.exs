@@ -2,36 +2,15 @@
 # Find the sum of all the primes below two million.
 
 defmodule Factors do
-  # The entirety of both find methods could be one line,
-  # but it's quite slow in that form. So I had to make
-  # it a little more complex.
   def find(n) do
-    find(n, 2, [1, n], div(n, 2))
-  end
-
-  # Use the symmetry of all of the factors to put both m, and n/m
-  # as factors at the same time. This way, I only really need
-  # to loop through about n/4 to find all of the factors.
-  def find(n, factorGuess, factorList, stop) do
-    quotient = div(n, factorGuess)
-
-    if (rem(n, factorGuess) === 0) do
-      if (factorGuess !== quotient) do
-        factorList = factorList ++ [ factorGuess, quotient ]
+    sqrtN = trunc(:math.sqrt(n))
+    Enum.reduce(2..sqrtN, [1, n], fn(x, acc) ->
+      if (rem(n, x) === 0) do
+        acc ++ [x, div(n, x)]
       else
-        factorList = factorList ++ [ factorGuess ]
+        acc
       end
-
-      if (quotient < stop) do
-        stop = factorGuess
-      end
-    end
-
-    if (factorGuess < stop) do
-      find(n, factorGuess + 1, factorList, stop)
-    else
-      factorList
-    end
+    end)
   end
 end
 
@@ -39,8 +18,7 @@ defmodule Prime do
   # We only need to go up to sqrt(n) to determine if
   # a number is prime or not.
   def check(n) do
-    sqrtN = round(:math.sqrt(n))
-    Factors.find(n, 2, [1], sqrtN) === [1]
+    Factors.find(n) === [1, n]
   end
 
   def next_prime(n) do
@@ -70,6 +48,7 @@ defmodule Prime do
   end
 end
 
+# IO.inspect Factors.findNew(12)
 sumOfPrimes = Prime.sum_primes(2000000, 1, 0)
 # sumOfPrimes = Prime.sum_primes(10, 1, 0)
 IO.puts sumOfPrimes
