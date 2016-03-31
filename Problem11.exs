@@ -114,7 +114,7 @@ defmodule Grid do
       Enum.max()
 
       # Now, get the negative sloped diagonal product. These are the ones where the
-      # differences between the columns are the same as the starting point.
+      # differences between the row and column indexes are the same as the starting point.
       [%{:row => firstRow, :col => firstCol, :val => _val}] = Enum.take(allNumsInGrid, 1)
       negativeDiagonal = Enum.filter(allNumsInGrid, fn(%{:row => row, :col => col, :val => _val}) ->
         row - col === firstRow - firstCol
@@ -130,8 +130,8 @@ defmodule Grid do
           row === firstRow and col === colEnd
         end)
 
-      # Sums along the positive diagonal will always be the same,
-      # so we just filter by the sum of the row and column indexes.
+      # Sums of the row and column indexes along the positive diagonal will always
+      # be the same, so we just filter by the sum of the row and column indexes.
       positiveDiagonal = Enum.filter(allNumsInGrid, fn(%{:row => row, :col => col, :val => _val}) ->
         row + col === posCol + posRow
       end) |>
