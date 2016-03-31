@@ -97,9 +97,7 @@ defmodule Grid do
         end)
       end) |>
       # Take the maximum row product.
-      Enum.reduce(0, fn(x, acc) ->
-        Enum.max([x, acc])
-      end)
+      Enum.max()
 
       # Go through each grid and reduce to the product of the columns.
       greatestColProduct = Enum.map(colStart..colEnd, fn(n) ->
@@ -113,9 +111,7 @@ defmodule Grid do
         end)
       end) |>
       # Take the maximum column product.
-      Enum.reduce(0, fn(x, acc) ->
-        Enum.max([x, acc])
-      end)
+      Enum.max()
 
       # Now, get the negative sloped diagonal product. These are the ones where the
       # differences between the columns are the same as the starting point.
@@ -150,9 +146,7 @@ defmodule Grid do
       Enum.max([ greatestRowProduct, greatestColProduct, greatestDiagonalProduct ])
     end) |>
     # Take the maximum total value.
-    Enum.reduce(0, fn(x, acc) ->
-      Enum.max([x, acc])
-    end)
+    Enum.max()
   end
 end
 # grid = Grid.make([
